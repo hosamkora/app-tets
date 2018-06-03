@@ -14,10 +14,10 @@ import hosam.myapplication.R;
 
 public class PersonAdaptor extends RecyclerView.Adapter<PersonAdaptor.ViewHolder> {
 
-    ArrayList<Person> people;
+    ArrayList<Person> mPeople;
 
     public PersonAdaptor(ArrayList<Person> people) {
-        this.people = people;
+        this.mPeople = people;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -40,7 +40,7 @@ public class PersonAdaptor extends RecyclerView.Adapter<PersonAdaptor.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Get the data model based on position
-        Person person = people.get(position);
+        Person person = mPeople.get(position);
 
         // Set item views based on your views and data model
         TextView nameView = holder.nameView;
@@ -52,7 +52,37 @@ public class PersonAdaptor extends RecyclerView.Adapter<PersonAdaptor.ViewHolder
 
     @Override
     public int getItemCount() {
-        return people.size();
+        return mPeople.size();
+    }
+
+    public void addPeople(ArrayList<Person> newPeople) {
+
+        //current people list size
+        int currentSize = getItemCount();
+
+        // count of new people list
+        int newPeopleCount = newPeople.size();
+
+        // add new people
+        mPeople.addAll(newPeople);
+
+        this.notifyItemRangeInserted(currentSize, newPeopleCount);
+
+
+    }
+
+    public void addPerson(Person newPerson) {
+
+        //current people list size
+        int postion = getItemCount();
+
+        // add new person in last index
+        mPeople.add(newPerson);
+
+        // notify changed index
+        this.notifyItemInserted(postion);
+
+
     }
 
     // Provide a direct reference to each of the views within a data item
